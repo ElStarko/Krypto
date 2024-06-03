@@ -1,31 +1,40 @@
-const Kryptonian = require('../models/kryptonian');
-const { sendEmail } = require('../services/emailService');
-const { generateOTP, generateToken } = require('../services/authService');
-const OTP_CACHE = require('../utils/otpCache');
+// controllers/authController.js
+const authService = require('../services/authService');
 
 const register = async (req, res) => {
-    const { email } = req.body;
     try {
-        const kryptonian = new Kryptonian({ email });
-        await kryptonian.save();
-        const otp = generateOTP();
-        OTP_CACHE.set(email, otp, 300); // Set OTP in cache for 5 minutes
-        await sendEmail(email, 'Confirm your email', `Your OTP is ${otp}`);
-        res.status(201).send('Registration successful. Check your email for the OTP.');
+        await authService.register(req.body.email, req.body.password);
+        res.status(201).send('Registration successful. Check your email for confirmation link.');
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+};
+
+const confirmEmail = async (req, res) => {
+    try {
+        await authService.confirmEmail(req.params.id);
+        res.status(200).send('Email confirmed successfully.');
     } catch (error) {
         res.status(400).send(error.message);
     }
 };
 
 const login = async (req, res) => {
-    const { email, otp } = req.body;
-    const cachedOtp = OTP_CACHE.get(email);
-    if (otp === cachedOtp) {
-        const token = generateToken({ email });
-        res.status(200).json({ token });
-    } else {
-        res.status(401).send('Invalid OTP');
+    try {
+        await authService.login(req.body.email, req.body.password);
+        res.status(200).send('OTP sent to your email.');
+    } catch (error) {
+        res.status(400).send(error.message);
     }
 };
 
-module.exports = { register, login };
+const verifyOTP = async (req, res) => {
+    try {
+        const token = await authService.verifyOTP(req.body.email, req.body.otp);
+        res.status(200).json({ token });
+    } catch (error) {
+        res.status(400).send(error.message);
+    }
+};
+
+module.exports = { register, confirmEmail, login, verifyOTP };

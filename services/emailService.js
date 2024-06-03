@@ -1,6 +1,6 @@
-const fetch = require('node-fetch');
-
 const sendEmail = async (to, subject, text) => {
+    const fetch = (await import('node-fetch')).default;
+    
     const response = await fetch('https://api.elasticemail.com/v2/email/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -16,3 +16,4 @@ const sendEmail = async (to, subject, text) => {
 };
 
 module.exports = { sendEmail };
+

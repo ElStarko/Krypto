@@ -1,16 +1,30 @@
-const base64Img = require('base64-img');
+// services/fileService.js
 const File = require('../models/file');
+const base64Img = require('base64-img');
+const generateApiKey = require('../utils/generateApiKey');
 
-const saveFile = async (filePath, owner) => {
-    const base64String = base64Img.base64Sync(filePath);
-    const file = new File({
-        owner,
-        base64: base64String,
-        fileType: filePath.split('.').pop(),
-    });
-    await file.save();
-    base64Img.imgSync(base64String, 'uploads', `${file._id}`);
-    return file;
+const generateApiKeyForUser = async (kryptonian) => {
+    const apiKey = generateApiKey();
+    kryptonian.apiKey = apiKey;
+    await kryptonian.save();
+    return apiKey;
 };
 
-module.exports = { saveFile };
+const uploadFile = async (owner, file) => {
+    const base64 = base64Img.base64Sync(file.path);
+    const newFile = new File({ owner, filename: file.originalname, base64 });
+    await newFile.save();
+    // Delete file from system
+    require('fs').unlinkSync(file.path);
+    return newFile;
+};
+
+const getAllFiles = async () => {
+    return File.find();
+};
+
+const getFileById = async (id) => {
+    return File.findById(id);
+};
+
+module.exports = { generateApiKeyForUser, uploadFile, getAllFiles, getFileById };

@@ -1,4 +1,13 @@
-const NodeCache = require('node-cache');
-const otpCache = new NodeCache();
+// utils/otpCache.js
+const Redis = require('ioredis');
+const redis = new Redis(process.env.REDIS_URI);
 
-module.exports = otpCache;
+const setOTP = (key, value, expiration = 300) => {
+    return redis.set(key, value, 'EX', expiration);
+};
+
+const getOTP = (key) => {
+    return redis.get(key);
+};
+
+module.exports = { setOTP, getOTP };
