@@ -31,19 +31,21 @@ To get started with KryptoniteApp, follow these steps:
 
 ## Install dependencies:
 
+```
 npm install
+```
 
 ## Set up environment variables:
 
 Create a .env file in the root directory and add the following variables:
 
-  PORT=3000
-  MONGODB_URI=your-mongodb-uri
-  JWT_SECRET=your-jwt-secret
-  EMAIL_SERVICE=elasticemail
-  EMAIL_USER=your-email@example.com
-  EMAIL_PASS=your-email-password
-  REDIS_URI=redis://localhost:6379
+  ### PORT=3000
+  ### MONGODB_URI=your-mongodb-uri
+  ### JWT_SECRET=your-jwt-secret
+  ### EMAIL_SERVICE=elasticemail
+  ### EMAIL_USER=your-email@example.com
+  ### EMAIL_PASS=your-email-password
+  ### REDIS_URI=redis://localhost:6379
 
 ## Run the application:
 
