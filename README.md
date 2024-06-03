@@ -29,11 +29,11 @@ To get started with KryptoniteApp, follow these steps:
    cd Krypto
    ```
 
-###Install dependencies:
+## Install dependencies:
 
 npm install
 
-###Set up environment variables:
+## Set up environment variables:
 
 Create a .env file in the root directory and add the following variables:
 
@@ -45,31 +45,9 @@ Create a .env file in the root directory and add the following variables:
   EMAIL_PASS=your-email-password
   REDIS_URI=redis://localhost:6379
 
-###Run the application:
+## Run the application:
 
 npm start
-
-Directory Structure
-The project structure is organized as follows:
-
-Krypto/
-├── controllers/
-│   ├── authController.js
-│   ├── fileController.js
-├── models/
-│   ├── kryptonian.js
-│   ├── file.js
-├── services/
-│   ├── authService.js
-│   ├── fileService.js
-├── utils/
-│   ├── email.js
-│   ├── generateApiKey.js
-│   ├── otpCache.js
-├── .env
-├── app.js
-├── routes.js
-└── README.md
 
 
 # KryptoniteApp API Documentation
@@ -138,11 +116,11 @@ Krypto/
 - **Method:** `POST`
 - **Description:** Invalidate an existing API key to prevent further use.
 
- ###Contributing
+## Contributing
 
 Contributions are welcome! If you'd like to contribute to KryptoniteApp, please fork the repository and submit a pull request.
 
-###License
+## License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 This README.md file provides an overview of the project, instructions for getting started, information about API documentation, the directory structure, contributing guidelines, and license details. Feel free to customize it further to suit your project's specific requirements and preferences.
